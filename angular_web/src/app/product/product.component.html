@@ -1,0 +1,25 @@
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <input class="form-control" placeholder="请输入商品名称"
+      [formControl]="keywordFilter">
+    </div>
+  </div>
+</div>
+<!-- 异步管道添加" | async"-->
+<div *ngFor="let product of products | filter: 'title': keyword" class="col-md-4 col-lg-4 col-sm-4">
+  <div class="thumbnail">
+    <img [src]="product.img">
+    <div class="caption">
+      <h4 class="pull-right">
+        {{ product.price }}元
+      </h4>
+      <h4><a [routerLink]="['/product', product.id]">{{ product.title }}</a></h4>
+      <p>{{ product.desc }}</p>
+    </div>
+    <div class="caption">
+      <app-stars [rating]="product.rating" [isReadonly]="true"></app-stars>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="thumbnail">
+  <img [src]="goodsImg">
+  <div class="caption">
+    <h4 class="pull-right">{{ product?.price }}元</h4>
+    <h4>{{ product?.title }}</h4>
+    <p>{{ product?.desc }}</p>
+  </div>
+  <div class="caption">
+    <p class="pull-right">共 {{ comments?.length }} 条评论</p>
+    <p>
+      <app-stars [rating]="product?.rating" [isReadonly]="true"></app-stars>
+    </p>
+  </div>
+</div>
+
+<div class="well">
+  <button type="button" class="btn btn-danger" (click)="showComment(template)">
+    评论
+  </button>
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">评价</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="commentRating" class="col-sm-2 control-label">整体评价</label>
+          <div class="col-sm-10" class="form-control-static">
+            <app-stars  [(rating)]="commentRating" [isReadonly]="false" id="commentRating"></app-stars>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="commentText" class="col-sm-2 control-label">详细内容</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="3" id="commentText" [(ngModel)]="commentText"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" (click)="addComment()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div class="row" *ngFor="let comment of comments">
+    <hr>
+    <div class="col-md-12">
+      <app-stars [rating]="comment.rating" [isReadonly]="true"></app-stars>
+      &nbsp;&nbsp;
+      <span>{{ comment.user }}</span>
+      <span class="pull-right">{{ comment.timestamp | date:"yyyy-MM-dd HH:mm:ss"}}</span>
+      <p></p>
+      <p>{{ comment.content }}</p>
+    </div>
+  </div>
+</div>
